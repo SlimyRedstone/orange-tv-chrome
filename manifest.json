@@ -1,0 +1,12 @@
+{
+	"name": "Orange TV Remote",
+	"version": "1.0.0",
+	"description": "Adds the Orange TV remote",
+	"manifest_version": 3,
+	"author": "SlimyRedstone",
+	"permissions": [],
+	"action": {
+		"default_popup": "popup.html"
+	},
+	"host_permissions": ["http://*/*", "https://*/*"]
+}

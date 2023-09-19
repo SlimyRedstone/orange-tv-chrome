@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700" rel="stylesheet" />
+		<title>Orange Remote Control</title>
+		<link rel="stylesheet" href="dark-mode.css" />
+        <script src="./js/jquery-3.7.1.min.js"></script>
+	</head>
+	<body>
+		<div id="main">
+            <div class="mode" id="live-mode">Live: </div>
+			<div data-key="power" class="power custom-button button" ask-confirm="true"></div>
+			<!-- <div data-key="playBackward" class="play-arrow custom-button button"></div> -->
+			
+			<div data-key="dirMenu" class="large-button button orange-font text">Menu</div>
+
+            <div class="directional-selector">
+                <div class="direction-row">
+                    <!-- <div class="direction corner"></div> -->
+                    <div class="direction left button" data-key="dirLeft">▲</div>
+                    <!-- <div class="direction corner"></div> -->
+                </div>
+                <div class="direction-row">
+                    <div class="direction up button" data-key="dirUp">▲</div>
+                    <div class="direction center button orange-font text" data-key="dirOk">OK</div>
+                    <div class="direction down button" data-key="dirDown">▲</div>
+                </div>
+                <div class="direction-row">
+                    <!-- <div class="direction corner"></div> -->
+                    <div class="direction right button" data-key="dirRight">▲</div>
+                    <!-- <div class="direction corner"></div> -->
+                </div>
+            </div>
+
+			<div data-key="dirBack" class="back custom-button large-button button"></div>
+
+            <div class="action-panel buttons">
+				<div class="action-col">
+					<div class="volume buttons">
+						<div class="button" data-key="volUp">+</div>
+						<div class="button large-button text" data-key="volMute">Mute</div>
+						<div class="button" data-key="volDown">-</div>
+					</div>
+				</div>
+				<div class="action-col">
+					<div class="channels buttons">
+						<div class="button" data-key="chanUp">⮝</div>
+						<div class="blank button"></div>
+						<div class="button" data-key="chanDown">⮟</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="number-panel buttons">
+				<div class="number-row">
+					<div class="number button text" data-key="number" data-num="1"></div>
+					<div class="number button text" data-key="number" data-num="2"></div>
+					<div class="number button text" data-key="number" data-num="3"></div>
+				</div>
+				<div class="number-row">
+					<div class="number button text" data-key="number" data-num="4"></div>
+					<div class="number button text" data-key="number" data-num="5"></div>
+					<div class="number button text" data-key="number" data-num="6"></div>
+				</div>
+				<div class="number-row">
+					<div class="number button text" data-key="number" data-num="7"></div>
+					<div class="number button text" data-key="number" data-num="8"></div>
+					<div class="number button text" data-key="number" data-num="9"></div>
+				</div>
+				<div class="number-row">
+					<div class="number button text" data-key="number" data-num="0"></div>
+				</div>
+			</div>
+		</div>
+        <div class="macro-mode" id="macro"></div>
+        <iframe src="" class="hidden" id="urlRequester" ></iframe>
+	</body>
+	<script src="popup.js"></script>
+</html>

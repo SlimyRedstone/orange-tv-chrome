@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" version="1.1"
+  style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;" viewBox="0 0 334 260" x="0px" y="0px" fill-rule="evenodd"
+  clip-rule="evenodd">
+    <path style="fill: #ff0000;fill-rule: nonzero;"
+      d="M69 55c5,-5 13,-5 18,0 5,5 5,13 0,18l-44 44 228 0c21,0 38,-17 38,-38l0 -66c0,-7 6,-13 13,-13 7,0 12,6 12,13l0 66c0,35 -28,63 -63,63l-228 0 44 44c5,5 5,13 0,18 -5,5 -13,5 -18,0l-65 -65c-5,-5 -5,-13 0,-18l65 -66z" />
+</svg>

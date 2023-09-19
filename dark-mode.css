@@ -1,0 +1,264 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    --orange: hsl(37, 100%, 50%);
+    --dark-orange: hsl(37, 100%, 25%);
+    --normal-width: 27px;
+    --normal-height: 27px;
+    --normal-pad-width: 2px;
+    --normal-pad-height: 2px;
+    --normal-font-size: medium;
+    --normal-margins: 5px;
+    --pic-offset: 3px;
+    --large-width: calc( var(--normal-width) * 2);
+    --large-height: calc( var(--normal-height) * 2);
+    --main-scale: 60%;
+    --max-width: 160px;
+    --max-height: 600px;
+}
+body {
+    background-color: hsl(0, 0%, 9%);
+    color: white;
+    padding: 0px;
+    margin: 0px;
+    width: var(--max-width);
+    height: var(--max-height);
+    /* overflow: hidden; */
+}
+div#main {
+    /* height: 100vh;
+    width: 100vw; */
+    width: calc(var(--max-width)-20px);
+    height: calc(var(--max-height)-20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    user-select: none;
+}
+div[data-key] {
+    background-color: hsl(0, 0%, 0%);
+    cursor: pointer;
+    font-size: var(--normal-font-size);
+    text-align: center;
+}
+
+div.orange-font {
+    color: var(--orange);
+}
+
+div.custom-button {
+    width: var(--normal-width);
+    height: var(--normal-height);
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position-x: var(--pic-offset) ;
+    background-position-y: var(--pic-offset) !important;
+    box-shadow: inset 0px 0px 13px 8px hsl(0deg 0% 100% / 4%) !important;
+}
+div.custom-button.power {
+    background-image: url('./icons/power.svg');
+    filter:hue-rotate(58deg) brightness(200%);
+}
+div.custom-button.back {
+    background-image: url('./icons/back.svg');
+    filter:hue-rotate(58deg) brightness(200%);
+}
+div.custom-button.play-arrow {
+    background-image: url('./icons/play_arrow.svg');
+    filter:hue-rotate(58deg) brightness(200%);
+}
+
+div.directional-selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    font-size: var(--normal-font-size);
+    margin-top: var(--normal-margins);
+    margin-bottom: var(--normal-margins);
+}
+
+div.directional-selector div.direction{
+    margin: 5px -5px;
+}
+div.direction {
+    width: calc(3*var(--normal-width));
+}
+div.direction.left {
+    transform: rotateZ(-90deg);
+}
+div.direction.right {
+    transform: rotateZ(90deg);
+}
+div.direction.up {
+    transform: rotateZ(0deg);
+}
+div.direction.down {
+    transform: rotateZ(180deg);
+}
+div.direction.center {
+    padding: 8px;
+    --ratio: 1.8;
+    width: calc(var(--ratio)*var(--normal-width)) !important;
+    height: calc(var(--ratio)*var(--normal-width)) !important;
+}
+div.direction.corner {
+    width: var(--normal-width);
+    height: var(--normal-height);
+    background-color: hsl(0, 0%, 0%);
+    box-shadow: inset 0px 0px 13px 8px hsl(0deg 0% 100% / 8%);
+    border-top-right-radius: 1em;
+}
+div.button.direction:not(.center) {
+    --ratio: 1.8;
+    width: calc(var(--ratio)*var(--normal-width)) !important;
+    padding-left: calc(var(--ratio)*var(--normal-pad-width));
+    padding-right: calc(var(--ratio)*var(--normal-pad-width));
+}
+
+div.direction-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+div.button {
+    width: var(--normal-width);
+    height: var(--normal-height);
+    font-size: var(--normal-font-size);
+    border-radius: 0.5em;
+    box-shadow: inset 0px 0px 13px 8px hsl(0deg 0% 100% / 8%);
+    margin: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid transparent;
+}
+div.button:hover:not(.blank) {
+    border: 2px solid hsla(0, 0%, 100%, 0.25);
+}
+div.text.button:hover {
+    text-decoration: underline;
+}
+div.text.button {
+    text-shadow: 2px 2px 5px hsl(0, 0%, 60%);
+}
+div.text.button.orange-font {
+    text-shadow: 2px 2px 5px var(--dark-orange);
+}
+div.blank.button {
+    box-shadow: none !important;
+    background-color: transparent !important;
+}
+div.large-button {
+    width: var(--large-width) !important;
+    background-position-x: center;
+}
+
+
+div.action-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    min-width: calc(3*var(--large-width));
+    min-height: calc(2*var(--large-height));
+    flex-wrap: nowrap;
+    /* margin-top: 25px; */
+    /* margin-bottom: 25px; */
+}
+div.action-panel > div.action-col{
+    display: flex;
+    flex-direction: column;
+}
+div.volume.buttons, div.channels.buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+div.number-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: var(--normal-font-size);
+    justify-content: center;
+    flex-wrap: nowrap;
+    border-radius: 0.5em;
+    border: 2px solid hsl(0, 0%, 0%);
+    overflow: hidden;
+    min-height: calc(4*var(--normal-height) + var(--normal-pad-height));
+    min-width: calc(3*var(--normal-width) + var(--normal-pad-width));
+    padding: 6px;
+    margin-top: var(--normal-margins);
+}
+div.number-panel > div.number-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+div.number::after {
+    content: attr(data-num);
+    font-size: var(--normal-font-size);
+    vertical-align: -webkit-baseline-middle;
+}
+
+iframe.hidden {
+    display: none;
+}
+
+div.mode#live-mode {
+    padding: 4px 8px;
+    margin: 10px;
+    border-radius: 0.5em;
+    box-shadow: inset 0px 0px 13px 8px hsl(0deg 0% 100% / 8%);
+    border: 2px solid transparent;
+    background-color: hsl(0, 0%, 0%);
+    cursor: pointer;
+    font-size: var(--normal-font-size);
+    text-align: center;
+
+}
+div.mode#live-mode:hover {
+    border: 2px solid hsla(0, 0%, 100%, 0.25);
+}
+div.mode::after {
+    content: 'Unknown';
+    color: yellow;
+}
+div.mode[live-mode='false']::after {
+    content: 'OFF';
+    color: crimson;
+}
+div.mode[live-mode='true']::after {
+    content: 'ON';
+    color: greenyellow;
+}
+
+div.macro-mode {
+    z-index: -5;
+    background-color: transparent;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: var(--max-height);
+    width: var(--max-width);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    text-align: center;
+}
+div.macro-mode[state="enabled"] {
+    z-index: 5 !important;
+    background-color: hsla(0deg ,0%, 0%, 69%) !important;
+}
