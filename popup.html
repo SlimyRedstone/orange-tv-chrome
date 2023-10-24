@@ -3,40 +3,43 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://127.0.0.1 " />
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700" rel="stylesheet" />
 		<title>Orange Remote Control</title>
 		<link rel="stylesheet" href="dark-mode.css" />
-        <script src="./js/jquery-3.7.1.min.js"></script>
+		<script src="./js/jquery-3.7.1.min.js"></script>
 	</head>
 	<body>
+		<div id="tv"></div>
 		<div id="main">
-            <div class="mode" id="live-mode">Live: </div>
+			<div class="mode" id="live-mode">Live:</div>
 			<div data-key="power" class="power custom-button button" ask-confirm="true"></div>
 			<!-- <div data-key="playBackward" class="play-arrow custom-button button"></div> -->
+
 			
-			<div data-key="dirMenu" class="large-button button orange-font text">Menu</div>
-
-            <div class="directional-selector">
-                <div class="direction-row">
-                    <!-- <div class="direction corner"></div> -->
-                    <div class="direction left button" data-key="dirLeft">▲</div>
-                    <!-- <div class="direction corner"></div> -->
-                </div>
-                <div class="direction-row">
-                    <div class="direction up button" data-key="dirUp">▲</div>
-                    <div class="direction center button orange-font text" data-key="dirOk">OK</div>
-                    <div class="direction down button" data-key="dirDown">▲</div>
-                </div>
-                <div class="direction-row">
-                    <!-- <div class="direction corner"></div> -->
-                    <div class="direction right button" data-key="dirRight">▲</div>
-                    <!-- <div class="direction corner"></div> -->
-                </div>
-            </div>
-
-			<div data-key="dirBack" class="back custom-button large-button button"></div>
-
-            <div class="action-panel buttons">
+			<div class="directional-selector">
+				<div class="direction-row">
+					<!-- <div class="direction corner"></div> -->
+					<div class="direction left button" data-key="dirLeft">▲</div>
+					<!-- <div class="direction corner"></div> -->
+				</div>
+				<div class="direction-row">
+					<div class="direction up button" data-key="dirUp">▲</div>
+					<div class="direction center button orange-font text" data-key="dirOk">OK</div>
+					<div class="direction down button" data-key="dirDown">▲</div>
+				</div>
+				<div class="direction-row">
+					<!-- <div class="direction corner"></div> -->
+					<div class="direction right button" data-key="dirRight">▲</div>
+					<!-- <div class="direction corner"></div> -->
+				</div>
+			</div>
+			
+			<div class="panel-row">
+				<div data-key="dirBack" class="back custom-button large-button button"></div>
+				<div data-key="dirMenu" class="large-button button orange-font text">Menu</div>
+			</div>
+			<div class="action-panel buttons">
 				<div class="action-col">
 					<div class="volume buttons">
 						<div class="button" data-key="volUp">+</div>
@@ -73,9 +76,33 @@
 					<div class="number button text" data-key="number" data-num="0"></div>
 				</div>
 			</div>
+			<div class="play-control buttons">
+				<div data-key="playBackward" class="custom-button button">⏪</div>
+				<div data-key="playPause" class="custom-button button">⏯</div>
+				<div data-key="playForward" class="custom-button button">⏩</div>
+			</div>
 		</div>
-        <div class="macro-mode" id="macro"></div>
-        <iframe src="" class="hidden" id="urlRequester" ></iframe>
+		<div class="macro-mode" id="macro"></div>
+		<iframe src="" class="hidden" id="urlRequester"></iframe>
+		<template data-temp="channel">
+			<div class="channel" data-name="channel" data-channel-num="">
+				<div class="channelName" data-name="channelId"></div>
+				<div class="programs" data-name="list-programs"></div>
+			</div>
+		</template>
+		<template data-temp="tv-program">
+			<div class="program" data-name="program">
+				<div class="prog-text diffusion" data-name="diffusion"></div>
+				<div class="thumbnail" data-name="thumbnail"></div>
+				<div class="content">
+					<div class="prog-text progTitle" data-name="title"></div>
+					<div class="prog-text duration" data-name="duration"></div>
+					<div class="prog-text progSynopsis" data-name="synopsis"></div>
+				</div>
+			</div>
+		</template>
 	</body>
+	<script src="remote_control.js"></script>
+	<script src="tv_program.js"></script>
 	<script src="popup.js"></script>
 </html>
