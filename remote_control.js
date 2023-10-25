@@ -144,7 +144,7 @@ function setVolumeLevel(level = 1, delay = 250) {
 	macroKeys(volList, delay)
 }
 
-function onLoadRemote() {
+function onLoadRemote(settings) {
 	var listKeys = []
 	document.querySelectorAll('div[data-key]').forEach((key, index) => {
 		const keyType = key.getAttribute('data-key')
@@ -152,111 +152,115 @@ function onLoadRemote() {
 
 		$(key).click(getKey)
 	})
-	document.addEventListener('keydown', (event) => {
-		event.preventDefault()
-		const key = event.key
-		// console.log(key)
 
-		switch (key) {
-			case 'Enter': {
-				if (macroMode) {
-					console.log(`Macro executed ! → ${listKeys}`)
-					for (var i = 0; i < listKeys.length; i++) listKeys[i] = remoteActions['number'] + listKeys[i]
-					macroKeys(listKeys, 250)
-					listKeys = []
+	console.log(`Keyboard Input: ${settings['settings']['enableKeyboard'] ? '✔️' : '❌'}`)
+	if (settings['settings']['enableKeyboard']) {
+		document.addEventListener('keydown', (event) => {
+			event.preventDefault()
+			const key = event.key
+			// console.log(key)
+
+			switch (key) {
+				case 'Enter': {
+					if (macroMode) {
+						console.log(`Macro executed ! → ${listKeys}`)
+						for (var i = 0; i < listKeys.length; i++) listKeys[i] = remoteActions['number'] + listKeys[i]
+						macroKeys(listKeys, 250)
+						listKeys = []
+						macroMode = false
+					} else {
+						sendKey(remoteActions['dirOk'])
+					}
+					break
+				}
+				case 'Backspace': {
+					if (!macroMode) sendKey(remoteActions['dirBack'])
+					else {
+						macroMode = false
+						listKeys = []
+					}
+					break
+				}
+				case 'M': {
+					if (!macroMode) sendKey(remoteActions['dirMenu'])
+					break
+				}
+				case 'm': {
+					if (!macroMode) sendKey(remoteActions['volMute'])
+					break
+				}
+				case 'Space':
+				case 'p': {
+					if (!macroMode) sendKey(remoteActions['playPause'])
+					break
+				}
+				case '+': {
+					if (!macroMode) sendKey(remoteActions['volUp'])
+					break
+				}
+				case '-': {
+					if (!macroMode) sendKey(remoteActions['volDown'])
+					break
+				}
+				case 'PageUp': {
+					if (!macroMode) sendKey(remoteActions['chanUp'])
+					break
+				}
+				case 'PageDown': {
+					if (!macroMode) sendKey(remoteActions['chanDown'])
+					break
+				}
+				case '.': {
+					if (!macroMode) sendKey(remoteActions['dirMenu'])
+					break
+				}
+				case 'Escape': {
+					if (!macroMode) {
+						//  Close only if in the extension
+						if (location.protocol == 'chrome-extension:') window.close()
+					}
 					macroMode = false
-				} else {
-					sendKey(remoteActions['dirOk'])
+					break
 				}
-				break
-			}
-			case 'Backspace': {
-				if (!macroMode) sendKey(remoteActions['dirBack'])
-				else {
-					macroMode = false
-					listKeys = []
-				}
-				break
-			}
-			case 'M': {
-				if (!macroMode) sendKey(remoteActions['dirMenu'])
-				break
-			}
-			case 'm': {
-				if (!macroMode) sendKey(remoteActions['volMute'])
-				break
-			}
-			case 'Space':
-			case 'p': {
-				if (!macroMode) sendKey(remoteActions['playPause'])
-				break
-			}
-			case '+': {
-				if (!macroMode) sendKey(remoteActions['volUp'])
-				break
-			}
-			case '-': {
-				if (!macroMode) sendKey(remoteActions['volDown'])
-				break
-			}
-			case 'PageUp': {
-				if (!macroMode) sendKey(remoteActions['chanUp'])
-				break
-			}
-			case 'PageDown': {
-				if (!macroMode) sendKey(remoteActions['chanDown'])
-				break
-			}
-			case '.': {
-				if (!macroMode) sendKey(remoteActions['dirMenu'])
-				break
-			}
-			case 'Escape': {
-				if (!macroMode) {
-					//  Close only if in the extension
-					if (location.protocol == 'chrome-extension:') window.close()
-				}
-				macroMode = false
-				break
-			}
-			default: {
-				if (key.startsWith('Arrow')) {
-					if (event.shiftKey) {
-						if (key.includes('Left') || key.includes('Right')) {
-							const keyName = (key == 'ArrowLeft') ? 'playBackward' : 'playForward'
-							keyName = sendKey(remoteActions[keyName])
+				default: {
+					if (key.startsWith('Arrow')) {
+						if (event.shiftKey) {
+							if (key.includes('Left') || key.includes('Right')) {
+								const keyName = key == 'ArrowLeft' ? 'playBackward' : 'playForward'
+								sendKey(remoteActions[keyName])
+								console.log(keyName)
+							}
+						} else {
+							const keyName = key.replace('Arrow', 'dir')
+							sendKey(remoteActions[keyName])
 							console.log(keyName)
 						}
-					} else {
-						const keyName = key.replace('Arrow', 'dir')
-						sendKey(remoteActions[keyName])
-						console.log(keyName)
 					}
-				}
 
-				if (parseInt(key) || key == '0') {
-					console.log(key)
-					macroMode = true
-					listKeys.push(parseInt(key))
-					if (listKeys.length > 3) {
-						for (var i = 0; i < listKeys.length; i++) {
-							listKeys[i] = listKeys[i + 1]
+					if (parseInt(key) || key == '0') {
+						console.log(key)
+						macroMode = true
+						listKeys.push(parseInt(key))
+						if (listKeys.length > 3) {
+							for (var i = 0; i < listKeys.length; i++) {
+								listKeys[i] = listKeys[i + 1]
+							}
+							listKeys.pop()
 						}
-						listKeys.pop()
+						document.querySelector('div#macro').innerHTML = '<h3>Press Enter to set the channel</h3></br><p>'
+						listKeys.forEach((value, index) => {
+							document.querySelector('div#macro').innerHTML += `${value}`
+						})
+						document.querySelector('div#macro').innerHTML += `</p>`
 					}
-					document.querySelector('div#macro').innerHTML = '<h3>Press Enter to set the channel</h3></br><p>'
-					listKeys.forEach((value, index) => {
-						document.querySelector('div#macro').innerHTML += `${value}`
-					})
-					document.querySelector('div#macro').innerHTML += `</p>`
+					break
 				}
-				break
 			}
-		}
 
-		document.querySelector('div#macro').setAttribute('state', macroMode ? 'enabled' : 'disabled')
-		if (!macroMode) document.querySelector('div#macro').innerHTML = ''
-	})
+			document.querySelector('div#macro').setAttribute('state', macroMode ? 'enabled' : 'disabled')
+			if (!macroMode) document.querySelector('div#macro').innerHTML = ''
+		})
+	}
 
 	$('div#live-mode').click(() => {
 		HTTP_QUERIES = !(localStorage.getItem('liveMode') == 'true') ?? true

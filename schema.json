@@ -1,0 +1,24 @@
+{
+    "type": "object",
+    "properties":{
+        "FavouriteChannels": {
+            "id":"ListFavourite",
+            "type":"array",
+            "items":{
+                "type":"string"
+            }
+        },
+        "BoxIPAddress": {
+            "id":"BoxIPAddress",
+            "type":"integer"
+        },
+        "DisplayProgram": {
+            "id":"DisplayProgram",
+            "type":"boolean"
+        },
+        "KeyboardInput": {
+            "id":"KeyboardInput",
+            "type":"boolean"
+        }
+    }
+}

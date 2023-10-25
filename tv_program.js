@@ -27,12 +27,21 @@ const whitelistedGenres = [
 	/* , 'Série' */
 ]
 
-function getTimePeriod(new_day_start_time=3) {
+var commonSettings = {
+	settings: {
+		favourites: [],
+		boxIP: 23,
+		keyboardInput: true,
+		displayProgram: true
+	}
+}
+
+function getTimePeriod(new_day_start_time = 3) {
 	// new_day_start_time → Time at which the current day is actually displayed
 	const today = new Date()
 	const yesterday = new Date(today)
 	const tomorrow = new Date(today)
-	
+
 	yesterday.setDate(today.getDate() - 1)
 	tomorrow.setDate(today.getDate() + 1)
 
@@ -40,7 +49,7 @@ function getTimePeriod(new_day_start_time=3) {
 		tomorrow.setDate(today.getDate())
 		today.setDate(yesterday.getDate())
 	}
-	today.setHours(20,0,0,0)
+	today.setHours(20, 0, 0, 0)
 	tomorrow.setHours(2, 0, 0, 0)
 
 	const periodStart = new Date(today)
@@ -92,7 +101,7 @@ function sortProgram(tvProgs) {
 			if (channelIDs.hasOwnProperty(prog['externalId'])) {
 				if (whitelistedGenres.includes(prog['genre'])) {
 					if (!ret['list'].hasOwnProperty(prog['externalId'])) ret['list'][prog['externalId']] = []
-					
+
 					var title = prog['title']
 					if (prog.hasOwnProperty('season')) {
 						const episodeDetails = [
@@ -125,7 +134,7 @@ function sortProgram(tvProgs) {
 			}
 		})
 	})
-	
+
 	// ret['sorted'].sort((chanX,chanY)=>{return chanX['channelNumber'] - chanY['channelNumber']})
 	return ret
 }
@@ -154,32 +163,35 @@ function makeKeyList(n) {
 	return list
 }
 
-async function onLoadTVProgram() {
-	const programs = await getTvProgram()
-	const sortedPrograms = sortProgram(programs)['list']
-	Object.keys(channelIDs).forEach((channel, chanIndex) => {
-		if (sortedPrograms.hasOwnProperty(channel)){
-			let new_channel = document.querySelector('template[data-temp="channel"]').content.cloneNode(true)
-			new_channel.querySelector('[data-name="channelId"]').innerText = channelIDs[channel]['name']
-			new_channel.querySelector('[data-channel-num]').setAttribute('data-channel-num', channelIDs[channel]['num'])
+function onLoadTVProgram(settings) {
+	if (settings['settings']['displayProgram']) {
+		getTvProgram().then((programs) => {
+			const sortedPrograms = sortProgram(programs)['list']
+			Object.keys(channelIDs).forEach((channel, chanIndex) => {
+				if (sortedPrograms.hasOwnProperty(channel)) {
+					let new_channel = document.querySelector('template[data-temp="channel"]').content.cloneNode(true)
+					new_channel.querySelector('[data-name="channelId"]').innerText = channelIDs[channel]['name']
+					new_channel.querySelector('[data-channel-num]').setAttribute('data-channel-num', channelIDs[channel]['num'])
 
-			sortedPrograms[channel].forEach((prog, progIndex) => {
-				let new_prog = document.querySelector('template[data-temp="tv-program"]').content.cloneNode(true)
-				new_prog.querySelector('[data-name="thumbnail"]').style.backgroundImage = `url("${prog['cover']['url']}")`
-				new_prog.querySelector('[data-name="title"]').innerText = prog['title']
-				new_prog.querySelector('[data-name="duration"]').innerText = prog['formatted']['duration']
-				new_prog.querySelector('[data-name="diffusion"]').innerText = prog['formatted']['diffusionDate']
-				new_prog.querySelector('[data-name="synopsis"]').innerText = synopsisMaker(prog['synopsis'], 10)
-				if (progIndex + 1 <= 3) new_channel.querySelector('[data-name="list-programs"]').appendChild(new_prog)
+					sortedPrograms[channel].forEach((prog, progIndex) => {
+						let new_prog = document.querySelector('template[data-temp="tv-program"]').content.cloneNode(true)
+						new_prog.querySelector('[data-name="thumbnail"]').style.backgroundImage = `url("${prog['cover']['url']}")`
+						new_prog.querySelector('[data-name="title"]').innerText = prog['title']
+						new_prog.querySelector('[data-name="duration"]').innerText = prog['formatted']['duration']
+						new_prog.querySelector('[data-name="diffusion"]').innerText = prog['formatted']['diffusionDate']
+						new_prog.querySelector('[data-name="synopsis"]').innerText = synopsisMaker(prog['synopsis'], 10)
+						if (progIndex + 1 <= 3) new_channel.querySelector('[data-name="list-programs"]').appendChild(new_prog)
+					})
+					document.querySelector('div#tv').appendChild(new_channel)
+				}
 			})
-			document.querySelector('div#tv').appendChild(new_channel)
-		}
-	})
-	document.querySelectorAll('div[data-name="channel"]').forEach((channel, index) => {
-		$(channel).click((event) => {
-			const keyList = makeKeyList(parseInt(channel.getAttribute('data-channel-num')))
-			console.log(keyList)
-			macroKeys(keyList, 300)
+			document.querySelectorAll('div[data-name="channel"]').forEach((channel, index) => {
+				$(channel).click((event) => {
+					const keyList = makeKeyList(parseInt(channel.getAttribute('data-channel-num')))
+					console.log(keyList)
+					macroKeys(keyList, 300)
+				})
+			})
 		})
-	})
+	}
 }

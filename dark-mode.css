@@ -22,14 +22,16 @@ body {
     padding: 0px;
     margin: 0px;
     max-width: var(--max-width);
-    height: var(--max-height);
+    min-height: 600px;
+    max-height: var(--max-height);
     display: flex;
     flex-direction: row;
     align-items: stretch;
     justify-content: space-between;
-    min-width: 400px;
+    /* min-width: 400px; */
+    min-width: 160px;
     width: fit-content;
-    transition: 1s cubic-bezier(0.4, 0, 0.2, 1) width, 1s cubic-bezier(0.4, 0, 0.2, 1) min-width;
+    /* transition: 1s cubic-bezier(0.4, 0, 0.2, 1) width, 1s cubic-bezier(0.4, 0, 0.2, 1) min-width; */
 }
 div#main {
     /* width: calc(var(--max-width)-20px); */

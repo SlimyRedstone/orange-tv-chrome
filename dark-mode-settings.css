@@ -1,0 +1,135 @@
+* {
+	font-family: 'Poppins', sans-serif;
+	--orange: hsl(37, 100%, 50%);
+	--dark-orange: hsl(37, 100%, 25%);
+	--normal-width: 27px;
+	--normal-height: 27px;
+	--normal-pad-width: 2px;
+	--normal-pad-height: 2px;
+	--normal-font-size: medium;
+	--normal-margins: 5px;
+}
+body {
+	background-color: hsl(0, 0%, 9%);
+	color: white;
+	padding: 0px;
+	margin: 0px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+div#main {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+h1.title {
+	color: var(--orange);
+	text-shadow: 2px 1px var(--dark-orange);
+	font-weight: 500;
+	text-decoration: underline;
+	user-select: none;
+}
+
+div#settings {
+	margin: 3em 0px;
+	font-size: medium;
+}
+
+div.parameter {
+	padding: 5px 15px;
+	user-select: none;
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	align-items: center;
+}
+
+div.parameter:hover > label {
+	text-decoration: underline;
+}
+
+input[type='checkbox'] {
+	--size: 28px;
+	width: var(--size);
+	height: var(--size);
+    padding: 2px;
+	appearance: none;
+	text-align: center;
+	font-size: large;
+	border: 2px solid hsla(0, 0%, 100%, 0.5);
+	border-radius: 0.25em;
+	background-color: hsla(0, 100%, 50%, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	/* clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); */
+}
+
+input[type='checkbox']:checked {
+	background-color: hsla(120, 100%, 50%, 0.1);
+}
+
+input[type='checkbox']:checked::after {
+	content: '✔️';
+}
+input[type='checkbox']::after {
+	content: '❌';
+}
+label {
+	padding-left: 0.5em;
+}
+
+input[type="number"] {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    color: white;
+    font-size: medium;
+    text-align: left;
+    border: 0px;
+    width: fit-content;
+    max-width: 3.1em;
+}
+
+button.save-button{
+    color: white;
+    border: 1px solid white;
+    border-radius: 0.5em;
+    padding: 5px 10px;
+    background-color: hsla(211, 100%, 50%, 0.3);
+    font-size: medium;
+}
+
+div#listChannels::before {
+    content: 'List of channels';
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+div.parameter:has(div#listChannels) {
+    margin-top: 2em;
+    justify-content: center !important;
+}
+div#listChannels {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 0.5em;
+}
+
+div.channel-param {
+    user-select: none;
+    cursor: pointer;
+}
+div.channel-param:hover {
+    color:burlywood
+}
+div.channel-param[favourite='❌'] {
+    text-decoration: line-through;
+    color:hsla(0, 100%, 75%, 0.2)
+}
